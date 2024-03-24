@@ -30,8 +30,20 @@ tabPrecio<-tb.freq(conjuntoDeDatos$Precio)
 tabPrecio
 tabCorte<-tb.freq(conjuntoDeDatos$Corte)
 tabCorte
+class(tabCorte)
+nrow(tabCorte)
+ncol(tabCorte)
+class(tabCorte[1])
+
 graphPeso<-barplot(tabPrecio,
                    main='Peso de diamantes',
                    xlab='Peso',
                    ylab='Frecuencia',
                    border='black')
+
+graphCorte<-barplot(table(tabCorte),
+                    horiz = FALSE,
+                    main='Cantidad de Cortes',
+                    sub='Conte de la cantidad de cortes de diamantes',
+                    xlab='Cortes',
+                    ylab='Cantidad')
