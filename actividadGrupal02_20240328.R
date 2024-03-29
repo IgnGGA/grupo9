@@ -1,11 +1,15 @@
 rm(list=ls()) #Limpiar consola
-
+#LIBRERIAS----------------------------------------------------------------------
 library(ggplot2)
-
-c.coefAsim<-function(x){
+#FUNCIONES----------------------------------------------------------------------
+c.coefAsim<-function(x){#Funcion de asimetria
   a=mean((x-mean(x,na.rm=T))^3,na.rm=T)
   coefAsim=a/(sd(x,na.rm = T)^3)
   coefAsim
+}
+c.coefVar<-function(x){#Funcion coeficiente de variabilidad
+  coefVar=sd(x,na.rm=T)/mean(x,na.rn=T)
+  coefVar
 }
 
 setwd("C:/Users/igngg/OneDrive - UNIVERSIDAD ANDRES BELLO/Documents/003_tercerAño_2024/05_mineriaDeDatos/Grupo_9") #Nuevo directorio
@@ -34,5 +38,7 @@ Q3Prc<-quantile(Prc, probs=0.75)[[1]];Q3Prc#Tercer Quintil
 varPrc<-var(Prc);varPrc#Varianza
 sdPrc<-sd(Prc);sdPrc#Desviacion estarndar
 IQRPrc<-IQR(Prc);IQRPrc#Rango inter quintil
+coefAsimPrc<-c.coefAsim(Prc);coefAsimPrc#Coeficiente de asimetria del precio, la cual es mayor que 0 indicando que es asimetrico
+coefVarPrc<-c.coefVar(Prc);coefVarPrc#Coeficiente de ariabilidad
 hist(Prc)#Histograma del precio, se observa que tiene un comportamiento atipico :s
 
