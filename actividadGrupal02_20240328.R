@@ -20,6 +20,16 @@ tb.freq<-function(x){#Tabla de frecuencias
   row.names(tf)<-names(table(x))
   return(tf)
 }
+c.ksTest<-function(x){#Se realiza una funcion para realizar KS Test's directos a la fraccion de tabla a consulta.
+  ksTest<-ks.test(x,"pnorm",mean=mean(x,na.rm = T),sd=sd(x,na.rm=T))
+  ksTest
+  if (ksTeste>0.05){
+    print("La distribuicion es es similar a la teorica (dist. Normal)")
+  }
+  else{
+    print("Se rechaza que la distribucion sea teoricamente similar a una normal")
+  }
+}
 #-------------------------------------------------------------------------------
 setwd("C:/Users/igngg/OneDrive - UNIVERSIDAD ANDRES BELLO/Documents/003_tercerAño_2024/05_mineriaDeDatos/Grupo_9") #Nuevo directorio
 
@@ -57,3 +67,4 @@ hist(Prc,
 largoPrc<-length(na.omit(Prc));largoPrc#Largo de la columna inspeccionada
 #Al carecer de datos faltante, el largo es el mismo que el indicado por la dimension de la tabla original 'diamantes'
 #tb.freq(Prc)#Para el precio no sirve una tabla de frecuencia... segun yo por la variabilidad y cantidad de datos que hay
+c.ksTest(Prc)
