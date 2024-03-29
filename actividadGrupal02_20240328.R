@@ -56,4 +56,4 @@ hist(Prc,
      ylab='Frecuencia')#Histograma del precio, se observa que tiene un comportamiento atipico :s
 largoPrc<-length(na.omit(Prc));largoPrc#Largo de la columna inspeccionada
 #Al carecer de datos faltante, el largo es el mismo que el indicado por la dimension de la tabla original 'diamantes'
-tb.freq(Prc)#Para el precio no sirve una tabla de frecuencia... segun yo por la variabilidad y cantidad de datos que hay
+#tb.freq(Prc)#Para el precio no sirve una tabla de frecuencia... segun yo por la variabilidad y cantidad de datos que hay
