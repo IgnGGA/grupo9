@@ -22,7 +22,7 @@ tb.freq<-function(x){#Tabla de frecuencias
 }
 c.ksTest<-function(x){#Se realiza una funcion para realizar KS Test's directos a la fraccion de tabla a consulta.
   ksTest<-ks.test(x,"pnorm",mean=mean(x,na.rm = T),sd=sd(x,na.rm=T))
-  str(ksTest); ksTest
+  ksTest
 }
 #-------------------------------------------------------------------------------
 setwd("C:/Users/igngg/OneDrive - UNIVERSIDAD ANDRES BELLO/Documents/003_tercerAño_2024/05_mineriaDeDatos/Grupo_9") #Nuevo directorio
@@ -63,3 +63,6 @@ largoPrc<-length(na.omit(Prc));largoPrc#Largo de la columna inspeccionada
 #tb.freq(Prc)#Para el precio no sirve una tabla de frecuencia... segun yo por la variabilidad y cantidad de datos que hay
 c.ksTest(Prc)#Si el valor de 'p.value' es mayor a 0,05 se considera que la distribuicion respecto a una dist. Normal son similares
 #en caso contrario, se puede inferir que la distribuicion de la columna de interes no se asemeja una distribuicion normal.
+c.ksTest(diamantes$Peso)
+hist(diamantes$Peso)
+coefVarPeso<-c.coefVar(diamantes$Peso);coefVarPeso
