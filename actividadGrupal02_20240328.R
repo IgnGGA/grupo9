@@ -1,7 +1,14 @@
 rm(list=ls()) #Limpiar consola
+#INSTALACION-LIBRERIAS----------------------------------------------------------
+#install.packages("ggplot2")
+#install.packages("qqplotr")
+#install.packages("corrplot")
+#install.packages("outliers")
 #LIBRERIAS----------------------------------------------------------------------
 library(ggplot2)
 library(qqplotr)
+library(corrplot)
+library(outliers)
 #FUNCIONES----------------------------------------------------------------------
 c.coefAsim<-function(x){#Funcion de asimetria
   a=mean((x-mean(x,na.rm=T))^3,na.rm=T)
