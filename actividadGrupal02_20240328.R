@@ -1,6 +1,7 @@
 rm(list=ls()) #Limpiar consola
 #LIBRERIAS----------------------------------------------------------------------
 library(ggplot2)
+library(qqplotr)
 #FUNCIONES----------------------------------------------------------------------
 c.coefAsim<-function(x){#Funcion de asimetria
   a=mean((x-mean(x,na.rm=T))^3,na.rm=T)
@@ -66,3 +67,19 @@ c.ksTest(Prc)#Si el valor de 'p.value' es mayor a 0,05 se considera que la distr
 c.ksTest(diamantes$Peso)
 hist(diamantes$Peso)
 coefVarPeso<-c.coefVar(diamantes$Peso);coefVarPeso
+
+ggplot(data = diamantes[!is.na(diamantes$Precio),], mapping = aes(sample = Precio)) +
+  stat_qq_line()+
+  stat_qq_band()+
+  stat_qq_point()+
+  labs(x = "Q-Normal", y = "Q-Precio (ppb)")+
+  theme(text = element_text(size=14))+
+  theme_grey(base_size = 16)
+
+ggplot(data = diamantes[!is.na(diamantes$Peso),], mapping = aes(sample = Peso)) +
+  stat_qq_line()+
+  stat_qq_band()+
+  stat_qq_point()+
+  labs(x = "Q-Normal", y = "Q-Peso (ppb)")+
+  theme(text = element_text(size=14))+
+  theme_grey(base_size = 16)
