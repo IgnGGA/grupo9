@@ -11,7 +11,16 @@ c.coefVar<-function(x){#Funcion coeficiente de variabilidad
   coefVar=sd(x,na.rm=T)/mean(x,na.rn=T)
   coefVar
 }
-
+tb.freq<-function(x){#Tabla de frecuencias
+  Fa<-as.vector(table(x))#Frecuencia Absoluta
+  Faa<-cumsum(Fa)#Frecuencia Acumulada
+  FR<-Fa/length(x)#Frecuencia Relativa
+  FRA<-Faa/length(x)#Frecuencia Relativa Acumulada
+  tf<-cbind(Fa, Faa, FR, FRA)
+  row.names(tf)<-names(table(x))
+  return(tf)
+}
+#-------------------------------------------------------------------------------
 setwd("C:/Users/igngg/OneDrive - UNIVERSIDAD ANDRES BELLO/Documents/003_tercerAño_2024/05_mineriaDeDatos/Grupo_9") #Nuevo directorio
 
 diamantes<-read.csv('Directorio/precio_diadm.csv', sep=',', header = T)
@@ -19,6 +28,7 @@ names(diamantes)<-c('Peso','Corte','Color','Claridad','Profundidad','Ancho','Pre
 diamantes
 str(diamantes)#Observamos los tipos de variables por columnas
 summary(diamantes)#obtenemos un sumario respecto al estado de las columas establecidas
+#PARA NUESTROS DATROS NO EXISTE EN LAS COLUMNAS VALORES FALTANTES.
 
 tablaCorte<-table(diamantes$Corte);tablaCorte#Podemos obtener la cantidad de cada uno de los cortes.
 
@@ -44,4 +54,6 @@ hist(Prc,
      main='Histograma de Precio',
      xlab='Precio',
      ylab='Frecuencia')#Histograma del precio, se observa que tiene un comportamiento atipico :s
-
+largoPrc<-length(na.omit(Prc));largoPrc#Largo de la columna inspeccionada
+#Al carecer de datos faltante, el largo es el mismo que el indicado por la dimension de la tabla original 'diamantes'
+tb.freq(Prc)#Para el precio no sirve una tabla de frecuencia... segun yo por la variabilidad y cantidad de datos que hay
