@@ -28,3 +28,29 @@ ggplot(data = diamantes[!is.na(diamantes$Precio),], mapping = aes(sample = Preci
   theme_grey(base_size = 16)
 
 #sU COMPORTAMIENTO NO SE ASEMEJA AL DE UNA DISTRIBUICION NORMAL.
+#valores atipicos.
+LSPrc<-Q3Prc+1.5*IQRPrc;LSPrc#Limite Superior de valores atipicos
+LIPrc<-Q1Prc-1.5*IQRPrc;LIPrc#Limite inferior de valores atipicos
+#Valores Atipicos Superiores
+which(Prc>=LSPrc)
+Prc[Prc>=LSPrc]
+Prc[which(Prc>=LSPrc)]
+#valores Atipicos Inferiores
+which(Prc<=LIPrc)
+Prc[Prc<=LIPrc]
+Prc[which(Prc<=LIPrc)]
+
+grubbs.test(Prc)#Test de Grubbs
+
+names(diamantes)
+boxp_prc<-ggplot(diamantes[!is.na(Prc),], aes(y=Precio)) + 
+  geom_boxplot(fill="lightgreen",varwidth = T)+
+  labs(x = "", y = "Precio (USD)")+
+  theme(text = element_text(size=14))+
+  theme_grey(base_size = 16);boxp_prc
+
+boxp_prcc<-ggplot(diamantes[!is.na(Prc),], aes(y=Precio, x=factor(Corte))) + 
+  geom_boxplot(fill="lightgreen",varwidth = T)+
+  labs(x = "", y = "Precio (USD)")+
+  theme(text = element_text(size=14))+
+  theme_grey(base_size = 16);boxp_prcc
