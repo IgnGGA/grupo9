@@ -9,3 +9,12 @@ names(diamantes)<-c('Peso','Corte','Color','Claridad','Profundidad','Ancho','Pre
 diamantes
 str(diamantes)#Observamos los tipos de variables por columnas
 summary(diamantes)#obtenemos un sumario respecto al estado de las columas establecidas
+
+tablaCorte<-table(diamantes$Corte)
+tablaCorte#Podemos obtener la cantidad de cada uno de los cortes.
+
+tablaColor<-table(diamantes$Color)
+tablaColor
+
+tablaClaridad<-table(diamantes$Claridad)
+tablaClaridad
