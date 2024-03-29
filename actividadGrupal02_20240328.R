@@ -40,5 +40,8 @@ sdPrc<-sd(Prc);sdPrc#Desviacion estarndar
 IQRPrc<-IQR(Prc);IQRPrc#Rango inter quintil
 coefAsimPrc<-c.coefAsim(Prc);coefAsimPrc#Coeficiente de asimetria del precio, la cual es mayor que 0 indicando que es asimetrico
 coefVarPrc<-c.coefVar(Prc);coefVarPrc#Coeficiente de ariabilidad
-hist(Prc)#Histograma del precio, se observa que tiene un comportamiento atipico :s
+hist(Prc,
+     main='Histograma de Precio',
+     xlab='Precio',
+     ylab='Frecuencia')#Histograma del precio, se observa que tiene un comportamiento atipico :s
 
