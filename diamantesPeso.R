@@ -22,3 +22,20 @@ ggplot(data = diamantes[!is.na(diamantes$Peso),], mapping = aes(sample = Peso)) 
   theme_grey(base_size = 16)
 
 #sU COMPORTAMIENTO NO SE ASEMEJA AL DE UNA DISTRIBUICION NORMAL.
+
+LSPso<-Q3Pso+1.5*IQRPso;LSPso
+LIPso<-Q1Pso-1.5*IQRPso;LIPso
+which(Pso>=LSPso)
+Pso[Pso>=LSPso]
+Pso[which(Pso>=LSPso)]
+grubbs.test(Pso)
+boxp_pso<-ggplot(diamantes[!is.na(Pso),], aes(y=Peso)) + 
+  geom_boxplot(fill="yellow",varwidth = T)+
+  labs(x = "", y = "Peso (qt)")+
+  theme(text = element_text(size=14))+
+  theme_grey(base_size = 16);boxp_pso
+boxp_psoc<-ggplot(diamantes[!is.na(Pso),], aes(y=Peso, x=factor(Corte))) + 
+  geom_boxplot(fill="lightyellow",varwidth = T)+
+  labs(x = "", y = "Peso (qt)")+
+  theme(text = element_text(size=14))+
+  theme_grey(base_size = 16);boxp_psoc
