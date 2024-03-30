@@ -8,3 +8,11 @@ price:  (var. discreta):  precio en dólares estadounidenses (\ $ 326 - \ $ 18,8
 x       (var. continua):  longitud en mm (0-10,74)
 y       (var. continua):  ancho en mm (0–58,9)
 z       (var. continua):  profundidad en mm (0–31,8)
+
+
+
+Nota de Ignacio
+
+El valor de los diamantes: las cuatro “c”
+Los parámetros en los que se ha de basar un tasador para considerar el valor de un diamante son cuatro: “carat”, “clarity”, “colour” y “cut”, esto es, peso, pureza, color y talla.
+
