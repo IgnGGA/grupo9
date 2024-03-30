@@ -19,3 +19,6 @@ cor(Pso,Prc,method = "pearson")
 cor.test(Pso,Prc,method = "pearson")
 ##Tau de kendall
 cor(Pso,Prc,method = "kendall")#podriamos decir que existe una tendencia a la correlacion entre ambras variables.
+
+
+ggcorr(diamantes, nbreaks=10, palette="Set3", label=TRUE, label_size=5, size=4, legend.size=10)
