@@ -44,12 +44,12 @@ grubbs.test(Prc)#Test de Grubbs
 
 boxp_prc<-ggplot(diamantes[!is.na(Prc),], aes(y=Precio)) + 
   geom_boxplot(fill="blue",varwidth = T)+
-  labs(x = "", y = "Precio (USD)")+
+  labs(x = "Corte", y = "Precio (USD)")+
   theme(text = element_text(size=14))+
   theme_grey(base_size = 16);boxp_prc
 
 boxp_prcc<-ggplot(diamantes[!is.na(Prc),], aes(y=Precio, x=factor(Corte))) + 
   geom_boxplot(fill="lightblue",varwidth = T)+
-  labs(x = "", y = "Precio (USD)")+
+  labs(x = "Corte", y = "Precio (USD)")+
   theme(text = element_text(size=14))+
   theme_grey(base_size = 16);boxp_prcc

@@ -31,11 +31,11 @@ Pso[which(Pso>=LSPso)]
 grubbs.test(Pso)
 boxp_pso<-ggplot(diamantes[!is.na(Pso),], aes(y=Peso)) + 
   geom_boxplot(fill="yellow",varwidth = T)+
-  labs(x = "", y = "Peso (qt)")+
+  labs(x = "Corte", y = "Peso (qt)")+
   theme(text = element_text(size=14))+
   theme_grey(base_size = 16);boxp_pso
 boxp_psoc<-ggplot(diamantes[!is.na(Pso),], aes(y=Peso, x=factor(Corte))) + 
   geom_boxplot(fill="lightyellow",varwidth = T)+
-  labs(x = "", y = "Peso (qt)")+
+  labs(x = "Corte", y = "Peso (qt)")+
   theme(text = element_text(size=14))+
   theme_grey(base_size = 16);boxp_psoc
