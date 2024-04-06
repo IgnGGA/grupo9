@@ -42,7 +42,7 @@ setwd("C:/Users/igngg/OneDrive - UNIVERSIDAD ANDRES BELLO/Documents/003_tercerAÃ
 diamantes<-read.csv('Directorio/precio_diadm.csv', sep=',', header = T)
 names(diamantes)<-c('Peso','Talla','Color','Pureza','Profundidad','Ancho','Precio','X','Y','Z')
 diamantes
-  str(diamantes)#Observamos los tipos de variables por columnas
+str(diamantes)#Observamos los tipos de variables por columnas
 summary(diamantes)#obtenemos un sumario respecto al estado de las columas establecidas
 #PARA NUESTROS DATROS NO EXISTE EN LAS COLUMNAS VALORES FALTANTES.
 
