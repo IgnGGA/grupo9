@@ -6,6 +6,9 @@ rm(list=ls()) #Limpiar consola
 #install.packages("outliers")
 #install.packages("dplyr")
 #install.packages("GGally")
+#install.packages('factoextra')
+#install.packages('mice')
+#install.packages('gridExtra')
 #LIBRERIAS----------------------------------------------------------------------
 library(ggplot2)
 library(qqplotr)
@@ -13,6 +16,9 @@ library(corrplot)
 library(outliers)
 library(dplyr)
 library(GGally)
+library(factoextra)
+library(mice)
+library(gridExtra)
 #FUNCIONES----------------------------------------------------------------------
 c.coefAsim<-function(x){#Funcion de asimetria
   a=mean((x-mean(x,na.rm=T))^3,na.rm=T)
