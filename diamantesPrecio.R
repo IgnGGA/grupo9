@@ -48,7 +48,7 @@ boxp_prc<-ggplot(diamantes[!is.na(Prc),], aes(y=Precio)) +
   theme(text = element_text(size=14))+
   theme_grey(base_size = 16);boxp_prc
 
-boxp_prcc<-ggplot(diamantes[!is.na(Prc),], aes(y=Precio, x=factor(Corte))) + 
+boxp_prcc<-ggplot(diamantes[!is.na(Prc),], aes(y=Precio, x=factor(Talla))) + 
   geom_boxplot(fill="lightblue",varwidth = T)+
   labs(x = "Talla", y = "Precio (USD)")+
   theme(text = element_text(size=14))+
