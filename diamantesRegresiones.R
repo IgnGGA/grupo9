@@ -1,10 +1,5 @@
-
-#Los datos a trabajar se encuentra completos para tratar
-#imp_dt<-mice(diamantes,m=1,seed=46)
-#imp_dt$imp$Peso
-
-str(diamantes)
-diamond<-diamantes[,-c(2,3,4)]
+#El documento se encuentra sin datos faltantes por lo tanto no requiere usar mice
+diamond<-diamantes[,-c(2,3,4)]# al tadaframe le extraemos las columnas con datos cualitativos
 
 pca_diamond <- prcomp(diamond,center=TRUE,scale = TRUE)
 pca_diamond
