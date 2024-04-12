@@ -9,7 +9,7 @@ varPrc<-var(Prc);varPrc#Varianza
 sdPrc<-sd(Prc);sdPrc#Desviacion estarndar
 IQRPrc<-IQR(Prc);IQRPrc#Rango inter quintil
 coefAsimPrc<-c.coefAsim(Prc);coefAsimPrc#Coeficiente de asimetria del precio, la cual es mayor que 0 indicando que es asimetrico
-coefVarPrc<-c.coefVar(Prc);coefVarPrc#Coeficiente de ariabilidad
+coefVarPrc<-c.coefVar(Prc);coefVarPrc#Coeficiente de Variabilidad
 hist(Prc,
      main='Histograma de Precio',
      xlab='Precio',
