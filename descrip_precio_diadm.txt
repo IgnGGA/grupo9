@@ -16,3 +16,11 @@ Nota de Ignacio
 El valor de los diamantes: las cuatro “c”
 Los parámetros en los que se ha de basar un tasador para considerar el valor de un diamante son cuatro: “carat”, “clarity”, “colour” y “cut”, esto es, peso, pureza, color y talla.
 
+
+Si nos centramos en el ancho y la profundidad, podriamos encontrar una relacion direca entre ellos, y establecer otra relacion el precio de los diamantes, asi encotrar una regresion lineal que nos permita predecir el precio.
+
+la relacion entre profundidad y ancho nos daria un acercamiento al precio ideal
+del diamante, en vez que del precio y su peso (considerando la cantidad de valores atipicos)
+
+1) analizar valores atipicos de profundidad y ancho.
+2) establecer relacion entre estas variables y el precio.

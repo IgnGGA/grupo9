@@ -22,3 +22,12 @@ coefAsimProf<-c.coefAsim(Prof);coefAsimProf#Si es 0 es simetrico, si es 1 o -1 e
 coefAsimAncho<-c.coefAsim(Ancho);coefAsimAncho
 coefVarProf<-c.coefVar(Prof);coefVarProf#Tenemos datos que tienen una relacion entre la desviacion estandar y la media es INFIMA
 coefVarAncho<-c.coefVar(Ancho);coefVarAncho
+c.ksTest(Prof)#POR AVERIGUAR Y ENTENDER BIEN
+c.ksTest(Ancho)#POR AVERIGUAR Y ENTENDER BIEN
+ggplot(data = diamantes[!is.na(diamantes$Profundidad),], mapping = aes(sample = Ancho)) +
+  stat_qq_line()+
+  stat_qq_band()+
+  stat_qq_point()+
+  labs(x = "Q-Profundidad", y = "Q-Ancho")+
+  theme(text = element_text(size=14))+
+  theme_grey(base_size = 16)
