@@ -1,4 +1,5 @@
 rm(list=ls()) #Limpiar consola
+setwd('C:/Users/Ignacio/OneDrive - UNIVERSIDAD ANDRES BELLO/Documents/003_tercerAño_2024/05_mineriaDeDatos/Grupo_9')
 #INSTALACION-LIBRERIAS----------------------------------------------------------
 #install.packages("ggplot2")
 #install.packages("qqplotr")
@@ -43,8 +44,6 @@ c.ksTest<-function(x){#Se realiza una funcion para realizar KS Test's directos a
   ksTest
 }
 #-------------------------------------------------------------------------------
-setwd("C:/Users/igngg/OneDrive - UNIVERSIDAD ANDRES BELLO/Documents/003_tercerAño_2024/05_mineriaDeDatos/Grupo_9") #Nuevo directorio
-
 diamantes<-read.csv('Directorio/precio_diadm.csv', sep=',', header = T)
 names(diamantes)<-c('Peso','Talla','Color','Pureza','Profundidad','Ancho','Precio','X','Y','Z')
 diamantes
