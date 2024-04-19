@@ -1,5 +1,5 @@
 rm(list=ls()) #Limpiar consola
-setwd('C:/Users/Ignacio/OneDrive - UNIVERSIDAD ANDRES BELLO/Documents/003_tercerAño_2024/05_mineriaDeDatos/Grupo_9')
+#setwd('C:/Users/Ignacio/OneDrive - UNIVERSIDAD ANDRES BELLO/Documents/003_tercerAño_2024/05_mineriaDeDatos/Grupo_9')
 #INSTALACION-LIBRERIAS----------------------------------------------------------
 #install.packages("ggplot2")
 #install.packages("qqplotr")
@@ -60,3 +60,7 @@ tablaClaridad<-table(diamantes$Claridad);tablaClaridad
 #Seria importante econtrar una relación entre el precio del diamantes y alguna de sus caracteristicas.
 #En primera instancia obtener los estadisticos de la comuna 'Precio' de los diamantes.
 
+diamantes$Talla<-as.factor(diamantes$Talla)
+diamantes$Color<-as.factor(diamantes$Color)
+diamantes$Pureza<-as.factor(diamantes$Pureza)
+summary(diamantes)#Observamos los tipos de variables por columnas
