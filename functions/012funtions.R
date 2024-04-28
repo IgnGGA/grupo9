@@ -21,3 +21,14 @@ c.ksTest<-function(x){#Se realiza una funcion para realizar KS Test's directos a
   ksTest<-ks.test(x,"pnorm",mean=mean(x,na.rm = T),sd=sd(x,na.rm=T))
   ksTest
 }
+
+med.reg<-function(obs,pred){#Funcon util para obtener su predicción
+  e = obs-pred
+  bias = mean(e)
+  mse = mean((e)^2)
+  mae = mean(abs(e))
+  rmse = sqrt(mse)
+  R2 = 1-(sum((e)^2)/sum((obs-mean(obs))^2))
+  medidas = data.frame(bias,mse,mae,rmse,R2)
+  medidas
+}
