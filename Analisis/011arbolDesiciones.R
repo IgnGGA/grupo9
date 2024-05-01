@@ -7,17 +7,17 @@ selectrows
 dat.train <- ejemData[selectrows,]
 dat.test <- ejemData[-selectrows,]
 
-tree <- rpart(Precio ~., data = dat.train, 
+data1 <- rpart(Precio ~., data = dat.train, 
               method = "anova",cp=0.001)
-rpart.plot(tree,fallen.leaves = FALSE, cex=0.65)
-bestcp2 <- tree$cptable[which.min(tree$cptable[,"xerror"]),"CP"]
+rpart.plot(data1,fallen.leaves = FALSE, cex=0.65)
+bestcp2 <- data1$cptable[which.min(data1$cptable[,"xerror"]),"CP"]
 bestcp2  
 
-ejemData2 <- prune(tree, cp = bestcp2)
-rpart.plot(ejemData2, box.palette="GnBu",
+data2 <- prune(data1, cp = bestcp2)
+rpart.plot(data2, box.palette="GnBu",
            branch.lty=3, shadow.col="gray", nn=TRUE)
 
-ejemData2$variable.importance %>% 
+data2$variable.importance %>% 
   data.frame() %>%
   rownames_to_column(var = "Feature") %>%
   rename(Overall = '.') %>%
@@ -26,8 +26,23 @@ ejemData2$variable.importance %>%
   theme_minimal() +
   coord_flip() +
   labs(x = "", y = "", title = "Importancia")
+
+dat.test
+dat.train
   
-dat.test$pred1<-predict(ejemData,dat.test)
-dat.train$pred1<-predict(ejemData,dat.train)
-val.ejemData<-med.reg(dat.test$Precio,dat.test$pred1)
-val.ejemData_2<-med.reg(dat.train$Precio,dat.train$pred1)
+dat.test$pred1<-predict(data1,dat.test)
+dat.train$pred1<-predict(data1,dat.train)
+val.data11<-med.reg(dat.test$Precio,dat.test$pred1)
+val.data12<-med.reg(dat.train$Precio,dat.train$pred1)
+
+plot.pred1<-ggplot(dat.test,aes(x=Precio,y=pred1))+
+  geom_point()+
+  geom_line(aes(x=Precio, y=Precio),linetype="dashed",col=2)+
+  labs(x = "Observaciones", y = "Predicciones")+
+  theme(text = element_text(size=14))+
+  theme_grey(base_size = 16)+ggtitle("Modelo 1");plot.pred1
+
+dat.test$pred2<-predict(data2,dat.test)
+dat.train$pred2<-predict(data2,dat.train)
+val.data21<-med.reg(dat.test$Precio,dat.test$pred2)
+val.data22<-med.reg(dat.train$Precio,dat.train$pred2)
