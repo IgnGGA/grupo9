@@ -46,3 +46,16 @@ dat.test$pred2<-predict(data2,dat.test)
 dat.train$pred2<-predict(data2,dat.train)
 val.data21<-med.reg(dat.test$Precio,dat.test$pred2)
 val.data22<-med.reg(dat.train$Precio,dat.train$pred2)
+
+all.medR<-data.frame(Modelos=c("Modelo 1","Modelo 2"),
+                     rbind(val.data11,val.data21))
+all.medR%>% flextable()#Tabla comparativa de ambos modelos, pero aca son iguales
+
+plot.pred2<-ggplot(dat.test,aes(x=Precio,y=Precio))+
+  geom_point()+
+  geom_line(aes(x=Precio, y=Precio),linetype="dashed",col=2)+
+  labs(x = "Observaciones", y = "Predicciones")+
+  theme(text = element_text(size=14))+
+  theme_grey(base_size = 16)+ggtitle("Modelo 2");plot.pred2
+
+grid.arrange(plot.pred1, plot.pred2, ncol = 2)
