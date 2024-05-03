@@ -1,7 +1,7 @@
 ejemData<-diamantes
 visdat::vis_dat(ejemData)#grafica de tipos de datos
 
-set.seed(26)
+set.seed(77)
 selectrows <- sample(1:nrow(ejemData),round(0.80*nrow(ejemData)))
 selectrows
 dat.train <- ejemData[selectrows,]
@@ -11,7 +11,7 @@ data1 <- rpart(Precio ~., data = dat.train,
               method = "anova",cp=0.001)
 rpart.plot(data1,fallen.leaves = FALSE, cex=0.65)
 bestcp2 <- data1$cptable[which.min(data1$cptable[,"xerror"]),"CP"]
-bestcp2  
+bestcp2#selection de valor optimo de la tabla de complicated generada durante el entrenamiento  
 
 data2 <- prune(data1, cp = bestcp2)
 rpart.plot(data2, box.palette="GnBu",
@@ -51,7 +51,7 @@ all.medR<-data.frame(Modelos=c("Modelo 1","Modelo 2"),
                      rbind(val.data11,val.data21))
 all.medR%>% flextable()#Tabla comparativa de ambos modelos, pero aca son iguales
 
-plot.pred2<-ggplot(dat.test,aes(x=Precio,y=Precio))+
+plot.pred2<-ggplot(dat.test,aes(x=Precio,y=pred2))+
   geom_point()+
   geom_line(aes(x=Precio, y=Precio),linetype="dashed",col=2)+
   labs(x = "Observaciones", y = "Predicciones")+
@@ -59,3 +59,15 @@ plot.pred2<-ggplot(dat.test,aes(x=Precio,y=Precio))+
   theme_grey(base_size = 16)+ggtitle("Modelo 2");plot.pred2
 
 grid.arrange(plot.pred1, plot.pred2, ncol = 2)
+
+all.medR_1<-data.frame(Modelo1=c("Train","Test"),
+                       rbind(val.data12,val.data11))
+
+# Metricas para train y test modelo 2
+
+all.medR_2<-data.frame(Modelo2=c("Train","Test"),
+                       rbind(val.data22,val.data21))
+
+
+all.medR_1%>% flextable()
+all.medR_2%>% flextable()
