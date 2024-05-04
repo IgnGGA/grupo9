@@ -10,6 +10,7 @@ rm(list=ls()) #Limpiar consola
 #install.packages('factoextra')
 #install.packages('mice')
 #install.packages('gridExtra')
+#install.packages('neuralnet')
 #LIBRERIAS----------------------------------------------------------------------
 library(ggplot2)
 library(qqplotr)
@@ -29,6 +30,7 @@ library(Metrics)
 library(yardstick)
 library(flextable)
 library(mlbench)
+library(neuralnet)
 #-------------------------------------------------------------------------------
 diamantes<-read.csv('Directorio/precio_diadm.csv', sep=',', header = T)
 names(diamantes)<-c('Peso','Talla','Color','Pureza','Profundidad','Ancho','Precio','X','Y','Z')
