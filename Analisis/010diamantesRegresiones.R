@@ -54,3 +54,40 @@ fviz_pca_var(pca_diamond,col.var = "contrib", gradient.cols = c("#00AFBB", "#E7B
                                                             "#FC4E07"),repel = TRUE,axes = c(2,1))
 library(corrplot)
 corrplot(res.var$cos2, is.corr=FALSE)
+
+library(ggplot2)
+library(ggpubr)
+ggplot(D2,aes(y=Ancho,x=Profundidad,add="reg.line"))+
+  stat_regline_equation(label.x = 10, label.y = 80)+
+  geom_smooth(method=lm, se=T)+
+  geom_point()+
+  #scale_y_continuous(limits = c(0,20))+
+  labs(x = "Profundidad", y = "Ancho")+
+  theme(text = element_text(size=14))+
+  theme_grey(base_size = 16)
+
+lmod<-lm(Profundidad~Ancho,data = D2)
+summary(lmod)
+
+D2$resid<-lmod$residuals
+D2$obs<-1:length(D2$resid)
+
+summary(D2$resid)
+D2$fit<-lmod$fitted.values
+
+hist(D2$resid,main = "Histograma residuos")
+plot(lmod,which = 2,col=c("blue"))
+
+ggplot(D2,aes(x=obs,y=resid))+
+  geom_point()+
+  geom_hline(yintercept = 0,linetype="dashed", color = "red")+
+  labs(x = "No. Observaciones", y = "Residuos")+
+  theme(text = element_text(size=14))+
+  theme_grey(base_size = 16)
+
+ggplot(D2,aes(x=Profundidad,y=fit))+
+  geom_point()+
+  geom_line(aes(x=Profundidad, y=Profundidad),linetype="dashed",col=2)+
+  labs(x = "Profundidad", y = "Profundidad-estimadas")+
+  theme(text = element_text(size=14))+
+  theme_grey(base_size = 16)
