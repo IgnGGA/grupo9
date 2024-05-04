@@ -1,4 +1,9 @@
 #El documento se encuentra sin datos faltantes por lo tanto no requiere usar mice
+
+diamantes<-diamantes[!(diamantes$X==0.0),]
+diamantes<-diamantes[!(diamantes$Y==0.0),]
+diamantes<-diamantes[!(diamantes$Z==0.0),]
+
 diamond<-diamantes[,-c(2,3,4)]# al tadaframe le extraemos las columnas con datos cualitativos
 
 pca_diamond <- prcomp(diamond,center=TRUE,scale = TRUE)
