@@ -32,3 +32,7 @@ med.reg<-function(obs,pred){#Funcon util para obtener su predicción
   medidas = data.frame(bias,mse,mae,rmse,R2)
   medidas
 }
+
+trans_minmax <- function(x){
+  (x - min(x)) / (max(x) - min(x))
+}
