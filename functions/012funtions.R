@@ -48,5 +48,6 @@ To_Dummy=function(variable){
   }
   dfaux=dfaux[,-1]
   colnames(dfaux)=auxnames
+  summary(dfaux)
   return(dfaux)
 }
