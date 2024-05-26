@@ -111,3 +111,12 @@ plot.pred2<-ggplot(dat.test,aes(x=price,y=pred2))+
     theme_gray(base_size=16)+ggtitle('Modelo 2');plot.pred2
 
 grid.arrange(plot.pred1, plot.pred2, ncol = 2)
+
+all.medR_1<-data.frame(Modelo1=c("Train","Test"),
+                       rbind(val.mod1_2,val.mod1))
+
+all.medR_2<-data.frame(Modelo2=c("Train","Test"),
+                       rbind(val.mod2_2,val.mod2))
+
+all.medR_1%>% flextable()
+all.medR_2%>% flextable()
