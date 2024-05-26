@@ -23,3 +23,7 @@ library(fastDummies)
 diamantes<-read.csv('Directorio/precio_diadm.csv', sep=',', header = T)
 str(diamantes)
 summary(diamantes)
+
+diamantes<-diamantes[!(diamantes$x==0.0),]
+diamantes<-diamantes[!(diamantes$y==0.0),]
+diamantes<-diamantes[!(diamantes$z==0.0),]
