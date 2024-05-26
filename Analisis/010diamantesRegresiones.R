@@ -1,93 +1,41 @@
-#El documento se encuentra sin datos faltantes por lo tanto no requiere usar mice
+set.seed(123)
+diamantes<-dummy_cols(diamantes, select_columns = c('cut', 'color', 'clarity'))
+diamantes<-diamantes[,-c(2,3,4)]
 
-diamantes<-diamantes[!(diamantes$X==0.0),]
-diamantes<-diamantes[!(diamantes$Y==0.0),]
-diamantes<-diamantes[!(diamantes$Z==0.0),]
 
-D2=diamantes[,-c(2,3,4)]
+seleccionarFilas <- sample(1:nrow(diamantes),round(0.75*nrow(diamantes)))
+datos.entranmieto <- diamantes[seleccionarFilas,]
+datos.prueba <- diamantes[-seleccionarFilas,]
 
-diamond<-diamantes[,-c(2,3,4)]# al tadaframe le extraemos las columnas con datos cualitativos
+mod1<-lm(price~.,data = datos.entranmieto)
 
-pca_diamond <- prcomp(diamond,center=TRUE,scale = TRUE)
-pca_diamond
+coefic.lm<-summary(mod1)$coefficients
+coefic.lm<-data.frame(Variables=row.names(coefic.lm),round(coefic.lm,4))
+colnames(coefic.lm)<-c("Variables","Estimación","Std.Error","t.value","P-valor")
+coefic.lm %>% flextable()
 
-res.var <- get_pca_var(pca_diamond)
-corrplot(res.var$cos2, is.corr=FALSE)
-pca_diamond$center
-pca_diamond$scale
-pca_diamond$rotation
+mod2.lm <- step(mod1, direction="backward",trace = 0)
 
-summary(pca_diamond)
-biplot(pca_diamond)
+coefic.lm2<-summary(mod2.lm)$coefficients
+coefic.lm2<-data.frame(Variables=row.names(coefic.lm2),round(coefic.lm2,4))
+colnames(coefic.lm2)<-c("Variables","Estimación","Std.Error","t.value","P-valor")
+coefic.lm2 %>% flextable()
 
-pca_diamond$x
+maximos <- apply(diamantes, 2, max) 
+minimos <- apply(diamantes, 2, min)
+escala <- as.data.frame(scale(diamantes, center = minimos, scale = maximos - minimos))
+dEntrenamiento.escala <- escala[seleccionarFilas,]
+dPruebas.escala<- escala[-seleccionarFilas,]
 
-VE <- pca_diamond$sdev^2
-PVE <- VE / sum(VE)
-round(PVE, 2)
-cumsum(PVE)
+mod.regnn1 <- neuralnet(price ~ depth+ carat + cut + color + clarity + table +
+                          cut_Fair +cut_Good +cut_Ideal +cut_Premium +
+                          color_D + color_E + color_F + color_G + color_H + color_I +
+                          clarity_I1 + clarity_IF + clarity_SI1 + clarity_SI2 + clarity_VS1 + clarity_VS2 +
+                          clarity_VSS1, data=dEntrenamiento.escala,hidden=c(5,3),linear.output=T)
+plot(mod.regnn1,rep="best")
 
-plot(pca_diamond,type="l")
+mod.regnn2 <- neuralnet(price ~.,data=dEntrenamiento.escala[,c(row.names(coefic.lm2)[-1],"price")],hidden=c(5,3),linear.output=T)
+plot(mod.regnn2,rep="best")
 
-library(factoextra)
-PVEp<- fviz_eig(pca_diamond)#,geom="bar")
-PVEp
 
-PVEa <- qplot(c(1:ncol(D2)), cumsum(PVE)) + 
-  geom_line() + 
-  xlab("Principal Component") + 
-  ylab("PVE-acumulado") + 
-  # ggtitle("Cumulative Scree Plot") +
-  ylim(0,1)
 
-PVEa
-
-grid.arrange(PVEp, PVEa, ncol = 2)
-
-eig.val <- get_eigenvalue(pca_diamond)
-eig.val
-
-res.var <- get_pca_var(pca_diamond)
-summary(pca_diamond)
-
-fviz_pca_var(pca_diamond,col.var = "contrib", gradient.cols = c("#00AFBB", "#E7B800", 
-                                                            "#FC4E07"),repel = TRUE,axes = c(2,1))
-library(corrplot)
-corrplot(res.var$cos2, is.corr=FALSE)
-
-library(ggplot2)
-library(ggpubr)
-ggplot(D2,aes(y=Ancho,x=Profundidad,add="reg.line"))+
-  stat_regline_equation(label.x = 10, label.y = 80)+
-  geom_smooth(method=lm, se=T)+
-  geom_point()+
-  #scale_y_continuous(limits = c(0,20))+
-  labs(x = "Profundidad", y = "Ancho")+
-  theme(text = element_text(size=14))+
-  theme_grey(base_size = 16)
-
-lmod<-lm(Profundidad~Ancho,data = D2)
-summary(lmod)
-
-D2$resid<-lmod$residuals
-D2$obs<-1:length(D2$resid)
-
-summary(D2$resid)
-D2$fit<-lmod$fitted.values
-
-hist(D2$resid,main = "Histograma residuos")
-plot(lmod,which = 2,col=c("blue"))
-
-ggplot(D2,aes(x=obs,y=resid))+
-  geom_point()+
-  geom_hline(yintercept = 0,linetype="dashed", color = "red")+
-  labs(x = "No. Observaciones", y = "Residuos")+
-  theme(text = element_text(size=14))+
-  theme_grey(base_size = 16)
-
-ggplot(D2,aes(x=Profundidad,y=fit))+
-  geom_point()+
-  geom_line(aes(x=Profundidad, y=Profundidad),linetype="dashed",col=2)+
-  labs(x = "Profundidad", y = "Profundidad-estimadas")+
-  theme(text = element_text(size=14))+
-  theme_grey(base_size = 16)
