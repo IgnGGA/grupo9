@@ -36,18 +36,3 @@ med.reg<-function(obs,pred){#Funcon util para obtener su predicción
 trans_minmax <- function(x){
   (x - min(x)) / (max(x) - min(x))
 }
-
-To_Dummy=function(variable){
-  names=unique(variable)
-  dfaux=data.frame(aux=variable)
-  auxnames=c()
-  for(i in names){
-    assign(paste0(i,"_DM"),ifelse(variable==i,1,0))
-    auxnames=c(auxnames,paste0(i,"_DM"))
-    dfaux=cbind.data.frame(dfaux,get(paste0(i,"_DM")))
-  }
-  dfaux=dfaux[,-1]
-  colnames(dfaux)=auxnames
-  summary(dfaux)
-  return(dfaux)
-}

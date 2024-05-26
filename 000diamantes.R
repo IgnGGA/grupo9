@@ -35,22 +35,5 @@ library(neuralnet)
 library(fastDummies)
 #-------------------------------------------------------------------------------
 diamantes<-read.csv('Directorio/precio_diadm.csv', sep=',', header = T)
-names(diamantes)<-c('Peso','Talla','Color','Pureza','Profundidad','Ancho','Precio','X','Y','Z')
-diamantes
-str(diamantes)#Observamos los tipos de variables por columnas
-summary(diamantes)#obtenemos un sumario respecto al estado de las columas establecidas
-#PARA NUESTROS DATROS NO EXISTE EN LAS COLUMNAS VALORES FALTANTES.
-
-tablaCorte<-table(diamantes$Corte);tablaCorte#Podemos obtener la cantidad de cada uno de los cortes.
-
-tablaColor<-table(diamantes$Color);tablaColor
-
-tablaClaridad<-table(diamantes$Claridad);tablaClaridad
-
-#Seria importante econtrar una relación entre el precio del diamantes y alguna de sus caracteristicas.
-#En primera instancia obtener los estadisticos de la comuna 'Precio' de los diamantes.
-
-diamantes$Talla<-as.factor(diamantes$Talla)
-diamantes$Color<-as.factor(diamantes$Color)
-diamantes$Pureza<-as.factor(diamantes$Pureza)
-summary(diamantes)#Observamos los tipos de variables por columnas
+str(diamantes)
+summary(diamantes)
