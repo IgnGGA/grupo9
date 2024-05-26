@@ -1,18 +1,4 @@
-rm(list=ls()) #Limpiar consola
-#setwd('C:/Users/Ignacio/OneDrive - UNIVERSIDAD ANDRES BELLO/Documents/003_tercerAño_2024/05_mineriaDeDatos/Grupo_9')
-#INSTALACION-LIBRERIAS----------------------------------------------------------
-#install.packages("ggplot2")
-#install.packages("qqplotr")
-#install.packages("corrplot")
-#install.packages("outliers")
-#install.packages("dplyr")
-#install.packages("GGally")
-#install.packages('factoextra')
-#install.packages('mice')
-#install.packages('gridExtra')
-#install.packages('neuralnet')
-#install.packages('fastDummies')
-#LIBRERIAS----------------------------------------------------------------------
+rm(list=ls())
 library(ggplot2)
 library(qqplotr)
 library(corrplot)
