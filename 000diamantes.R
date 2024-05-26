@@ -33,13 +33,18 @@ library(car)
 library(ggthemr)
 #-------------------------------------------------------------------------------
 diamantes<-read.csv('Directorio/precio_diadm.csv', sep=',', header = T)
-diamonds$cut <- as.factor(diamonds$cut)
-diamonds$color <- as.factor(diamonds$color)
-diamonds$clarity <- as.factor(diamonds$clarity)
+dNeural<-read.csv('Directorio/precio_diadm.csv', sep=',', header = T)
 
 diamantes<-diamantes[!(diamantes$x==0.0),]
 diamantes<-diamantes[!(diamantes$y==0.0),]
 diamantes<-diamantes[!(diamantes$z==0.0),]
+dNeural<-dNeural[!(dNeural$x==0.0),]
+dNeural<-dNeural[!(dNeural$y==0.0),]
+dNeural<-dNeural[!(dNeural$z==0.0),]
+
+diamonds$cut <- as.factor(diamonds$cut)
+diamonds$color <- as.factor(diamonds$color)
+diamonds$clarity <- as.factor(diamonds$clarity)
 
 str(diamantes)
 summary(diamantes)
@@ -65,11 +70,4 @@ get_regression_summaries(model_fw)
 get_regression_summaries(model_bo)
 #___________
 
-summary(diamantes)
-
-normalize <- function(x) {
-  return ((x - min(x)) / (max(x) - min(x)))
-}
-
-maxmindf <- as.data.frame(lapply(diamantes, normalize))
- 
+summary(diamantes) 
