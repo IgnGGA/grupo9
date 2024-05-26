@@ -1,4 +1,5 @@
 set.seed(123)
+diamantes<-dummy_cols(diamantes, select_columns = c('cut', 'color', 'clarity'))
 diamantes<-diamantes[,-c(2,3,4)]
 
 
@@ -26,11 +27,11 @@ escala <- as.data.frame(scale(diamantes, center = minimos, scale = maximos - min
 dEntrenamiento.escala <- escala[seleccionarFilas,]
 dPruebas.escala<- escala[-seleccionarFilas,]
 
-mod.regnn1 <- neuralnet(price ~., data=dEntrenamiento.escala,hidden=c(5,3),stepmax = 10000000,linear.output=T)
+mod.regnn1 <- neuralnet(price ~., data=dEntrenamiento.escala,hidden=c(5,3),linear.output=T)
 plot(mod.regnn1,rep="best")
 
-mod.regnn2 <- neuralnet(price ~.,data=dEntrenamiento.escala[,c(row.names(coefic.lm2)[-1],"price")],hidden=c(5,3),stepmax = 10000000,linear.output=T)
+mod.regnn2 <- neuralnet(price ~.,data=dEntrenamiento.escala[,c(row.names(coefic.lm2)[-1],"price")],hidden=c(5,3),stepmax = 100,linear.output=T)
 plot(mod.regnn2,rep="best")
-
+ 
 
 
