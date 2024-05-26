@@ -63,3 +63,13 @@ model_bo <- step(model_single, scope = list(lower = model_single, upper = model_
 get_regression_summaries(model_bw)
 get_regression_summaries(model_fw)
 get_regression_summaries(model_bo)
+#___________
+
+summary(diamantes)
+
+normalize <- function(x) {
+  return ((x - min(x)) / (max(x) - min(x)))
+}
+
+maxmindf <- as.data.frame(lapply(diamantes, normalize))
+ 
