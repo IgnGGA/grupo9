@@ -30,3 +30,123 @@ apply(pred_y, c(2), function(x) cor(x,y_test))
 
 plot(y_test,pred,pch=16)
 
+set.seed(46)
+selectrows <- sample(1:nrow(dNeural),round(0.80*nrow(dNeural)))
+dat.train <- dNeural[selectrows,]
+dat.test <- dNeural[-selectrows,]
+
+# prepare resampling method
+control <- trainControl(method="repeatedcv", number=10, repeats=3)
+
+#Regresión Lineal Múltiple
+st.time<-Sys.time()
+fitR.lm <- train(price~., data=dat.train, method="lm", metric="RMSE", trControl=control)
+end.time<- Sys.time()
+tim.lm<-end.time-st.time
+
+coefic.lm<-summary(fitR.lm)$coefficients
+coefic.lm<-data.frame(Variables=row.names(coefic.lm),round(coefic.lm,4))
+colnames(coefic.lm)<-c("Variables","Estimación","Std.Error","t.value","P-valor")
+library(flextable)
+coefic.lm %>% flextable()
+#gráfico Q-Q
+plot(fitR.lm$finalModel,which = 2,col=c("blue"))
+
+#árbol de decisión
+st.time<-Sys.time()
+fitR.dt <- train(price~., data=dat.train, method="rpart", metric="RMSE", trControl=control,na.action=na.omit,tuneLength=5)
+end.time<-Sys.time()
+tim.dt<-end.time-st.time
+
+fitR.dt$results
+library(rattle)
+fancyRpartPlot(fitR.dt$finalModel,cex=0.6)
+#redes neuronales
+st.time<-Sys.time()
+fitR.nn <- train(price~., data=dat.train,
+                 method = "nnet",metric="RMSE",trControl = control,linout=TRUE,
+                 preProcess=c("scale","center"),na.action = na.omit,trace=F,maxit = 1000,tunelength=9)
+end.time<-Sys.time()
+tim.nn<-end.time-st.time
+ggplot(fitR.nn, highlight = TRUE)
+library(NeuralNetTools)
+old.par <- par(mar = c(bottom = 1, left = 2, top = 2, right = 3), xpd = NA)
+plotnet(fitR.nn$finalModel)
+
+##K-vecinos más cercanos
+st.time<-Sys.time()
+fitR.knn <- train(price~., data=dat.train, method="knn", metric="RMSE",
+                  linout=TRUE, preProcess=c("scale","center"), trControl=control,na.action=na.omit)
+end.time<-Sys.time()
+tim.knn<-end.time-st.time
+
+#tiempo cada algoritmo (agregar de cada estudiantes)
+time.all<-data.frame(Algoritmos=c("LM","DT","NN","KNN"),
+                     Tiempo=c(tim.lm,tim.dt,tim.nn,tim.knn))
+library(flextable)
+time.all%>% flextable()
+
+##gráfico comparativo
+list_reg<-list(lm=fitR.lm,dt=fitR.dt, nn=fitR.nn,knn=fitR.knn)
+all_reg <- resamples(list_reg)
+summary(all_reg)
+bwplot(all_reg, layout = c(3, 1),scales="free",cex.axis = 1.5)
+
+##Predicción
+med.reg<-function(obs,pred){
+  e = obs-pred
+  bias = mean(e)
+  mse = mean((e)^2)
+  mae = mean(abs(e))
+  rmse = sqrt(mse)
+  R2 = 1-(sum((e)^2)/sum((obs-mean(obs))^2))
+  medidas = data.frame(bias,mse,mae,rmse,R2)
+  medidas
+}
+
+pred.lm<-predict(fitR.lm,dat.test)
+val.lm<-med.reg(dat.test$price,pred.lm)
+
+pred.dt<-predict(fitR.dt,dat.test)
+val.dt<-med.reg(dat.test$price,pred.dt)
+
+pred.nn<-predict(fitR.nn,dat.test)
+val.nn<-med.reg(dat.test$price,pred.nn)
+
+pred.knn<-predict(fitR.knn,dat.test)
+val.knn<-med.reg(dat.test$price,pred.knn)
+
+all.medR<-data.frame(Algoritmos=c("LM","DT","NN","KNN"),rbind(val.lm,val.dt,val.nn,val.knn))
+all.medR%>% flextable()
+
+##gráficos
+plot.predlm<-ggplot(dat.test,aes(x=price,y=pred.lm))+
+  geom_point()+
+  geom_line(aes(x=price, y=price),linetype="dashed",col=2)+
+  labs(x = "Observaciones", y = "Predicciones")+
+  theme(text = element_text(size=14))+
+  theme_grey(base_size = 16)+ggtitle("LM")
+
+plot.preddt<-ggplot(dat.test,aes(x=price,y=pred.dt))+
+  geom_point()+
+  geom_line(aes(x=price, y=price),linetype="dashed",col=2)+
+  labs(x = "Observaciones", y = "Predicciones")+
+  theme(text = element_text(size=14))+
+  theme_grey(base_size = 16)+ggtitle("DT")
+
+plot.prednn<-ggplot(dat.test,aes(x=price,y=pred.nn))+
+  geom_point()+
+  geom_line(aes(x=price, y=price),linetype="dashed",col=2)+
+  labs(x = "Observaciones", y = "Predicciones")+
+  theme(text = element_text(size=14))+
+  theme_grey(base_size = 16)+ggtitle("NN")
+
+plot.predknn<-ggplot(dat.test,aes(x=price,y=pred.knn))+
+  geom_point()+
+  geom_line(aes(x=price, y=price),linetype="dashed",col=2)+
+  labs(x = "Observaciones", y = "Predicciones")+
+  theme(text = element_text(size=14))+
+  theme_grey(base_size = 16)+ggtitle("KNN")
+
+library(gridExtra) 
+grid.arrange(plot.predlm, plot.preddt,plot.prednn,plot.predknn, ncol = 2)
