@@ -60,18 +60,19 @@ tim.dt<-end.time-st.time
 
 fitR.dt$results
 library(rattle)
-fancyRpartPlot(fitR.dt$finalModel,cex=0.6)
+fancyRpartPlot(fitR.dt$finalModel,tweak=1)
 #redes neuronales
 st.time<-Sys.time()
 fitR.nn <- train(price~., data=dat.train,
                  method = "nnet",metric="RMSE",trControl = control,linout=TRUE,
-                 preProcess=c("scale","center"),na.action = na.omit,trace=F,maxit = 1000,tunelength=9)
+                 preProcess=c("scale","center"),na.action = na.omit,trace=F,maxit = 300,tunelength=9)
 end.time<-Sys.time()
 tim.nn<-end.time-st.time
 ggplot(fitR.nn, highlight = TRUE)
 library(NeuralNetTools)
 old.par <- par(mar = c(bottom = 1, left = 2, top = 2, right = 3), xpd = NA)
 plotnet(fitR.nn$finalModel)
+
 
 ##K-vecinos más cercanos
 st.time<-Sys.time()
