@@ -36,7 +36,7 @@ dat.train <- dNeural[selectrows,]
 dat.test <- dNeural[-selectrows,]
 
 # prepare resampling method
-control <- trainControl(method="repeatedcv", number=10, repeats=3)
+control <- trainControl(method="repeatedcv", number=20, repeats=6)
 
 #Regresión Lineal Múltiple
 st.time<-Sys.time()
@@ -54,7 +54,7 @@ plot(fitR.lm$finalModel,which = 2,col=c("blue"))
 
 #árbol de decisión
 st.time<-Sys.time()
-fitR.dt <- train(price~., data=dat.train, method="rpart", metric="RMSE", trControl=control,na.action=na.omit,tuneLength=5)
+fitR.dt <- train(price~., data=dat.train, method="rpart", metric="RMSE", trControl=control,na.action=na.omit,tuneLength=10)
 end.time<-Sys.time()
 tim.dt<-end.time-st.time
 
@@ -65,7 +65,7 @@ fancyRpartPlot(fitR.dt$finalModel,tweak=1)
 st.time<-Sys.time()
 fitR.nn <- train(price~., data=dat.train,
                  method = "nnet",metric="RMSE",trControl = control,linout=TRUE,
-                 preProcess=c("scale","center"),na.action = na.omit,trace=F,maxit = 300,tunelength=9)
+                 preProcess=c("scale","center"),na.action = na.omit,trace=F,maxit = 2000,tunelength=9)
 end.time<-Sys.time()
 tim.nn<-end.time-st.time
 ggplot(fitR.nn, highlight = TRUE)
