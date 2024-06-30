@@ -37,41 +37,10 @@ library(NeuralNetTools)
 library(rattle)
 #-------------------------------------------------------------------------------
 diamantes<-read.csv('Directorio/precio_diadm.csv', sep=',', header = T)
-dNeural<-read.csv('Directorio/precio_diadm.csv', sep=',', header = T)
 
 diamantes<-diamantes[!(diamantes$x==0.0),]
 diamantes<-diamantes[!(diamantes$y==0.0),]
 diamantes<-diamantes[!(diamantes$z==0.0),]
-dNeural<-dNeural[!(dNeural$x==0.0),]
-dNeural<-dNeural[!(dNeural$y==0.0),]
-dNeural<-dNeural[!(dNeural$z==0.0),]
-
-diamonds$cut <- as.factor(diamonds$cut)
-diamonds$color <- as.factor(diamonds$color)
-diamonds$clarity <- as.factor(diamonds$clarity)
 
 str(diamantes)
 summary(diamantes)
-
-smp_siz = floor(0.80*nrow(diamonds))
-set.seed(123)
-train_ind = sample(seq_len(nrow(diamonds)), size = smp_siz)
-train = diamonds[train_ind,]
-test = diamonds[-train_ind,] 
-
-model_single <- lm(price ~ carat, data = train)
-get_regression_summaries(model_single)
-
-model_full <- lm(price ~ ., data = train)
-get_regression_summaries(model_full)
-
-model_bw <- step(model_full, direction = "backward", trace = FALSE)
-model_fw <- step(model_single, scope = list(lower = model_single, upper = model_full), direction = "forward", trace = FALSE)
-model_bo <- step(model_single, scope = list(lower = model_single, upper = model_full), direction = "both", trace = FALSE)
-
-get_regression_summaries(model_bw)
-get_regression_summaries(model_fw)
-get_regression_summaries(model_bo)
-#___________
-
-summary(diamantes) 
