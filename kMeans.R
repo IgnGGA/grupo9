@@ -3,10 +3,7 @@ library(ks)
 
 diamantes_aux<-diamantes
 names(diamantes)
-# deben sacar el precio
 diamantes<-diamantes[,-c(3,4,7)]
-#diamantes<-dummy_cols(diamantes, select_columns = c('cut'))
-#diamantes<-diamantes[,-c(2)]
 summary(diamantes)
 names(diamantes)
 table(diamantes$cut)
@@ -18,6 +15,7 @@ diamantes$cut[diamantes$cut%in%"Ideal"]<-"5"
 diamantes$cut<-as.numeric(diamantes$cut)
 
 str(diamantes)
+set.seed(123)
 selectrows <- sample(1:nrow(diamantes),round(0.75*nrow(diamantes)))
 muestra <- diamantes[-selectrows,]
 elResto <- diamantes[selectrows,]
@@ -45,13 +43,13 @@ fviz_nbclust(pcaD_ux, kmeans, method = "wss") +
 fviz_nbclust(pcaD_ux, kmeans, method = "silhouette")
 
 ### Gap statistic
-fviz_nbclust(diamantesScale, kmeans, method = "gap_stat")
+fviz_nbclust(pcaD_ux, kmeans, method = "gap_stat")
 
 #ajustar modelo
 fit2<-kmeans(pcaD_ux, 2)
 table(fit2$cluster)
 barplot(table(fit2$cluster),col=c(2,3))
-fviz_clus(fit2, data = muestra)
+fviz_cluster(fit2, data = muestra)
 #funModeling::freq(fit1$clus)
 #evaluar modelo
 muestra_aux <- diamantes_aux[-selectrows,]
