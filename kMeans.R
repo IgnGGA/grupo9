@@ -2,11 +2,21 @@ library(factoextra)
 library(ks)
 
 diamantes_aux<-diamantes
+diamantes_aux2<-diamantes
+diamantes_aux2<-dummy_cols(diamantes_aux2, select_columns = c('cut', 'clarity', 'color'))
+diamantes_aux2<-diamantes_aux2[,-c(2,3,4,7)]
+str(diamantes_aux2)
+pcaDaux<-prcomp(diamantes_aux2,center=TRUE,scale=TRUE)
+summary(pcaDaux)
+res.varaux <- get_pca_var(pcaDaux)
+corrplot(res.varaux$cos2, is.corr=FALSE)
+
 names(diamantes)
 diamantes<-diamantes[,-c(3,4,7)]
 summary(diamantes)
 names(diamantes)
 table(diamantes$cut)
+
 diamantes$cut[diamantes$cut%in%"Fair"]<-"1"
 diamantes$cut[diamantes$cut%in%"Good"]<-"2"
 diamantes$cut[diamantes$cut%in%"Very Good"]<-"3"
@@ -46,7 +56,7 @@ fviz_nbclust(pcaD_ux, kmeans, method = "silhouette")
 fviz_nbclust(pcaD_ux, kmeans, method = "gap_stat")
 
 #ajustar modelo
-fit2<-kmeans(pcaD_ux, 2)
+fit2<-kmeans(pcaD_ux, 3)
 table(fit2$cluster)
 barplot(table(fit2$cluster),col=c(2,3))
 fviz_cluster(fit2, data = muestra)
@@ -73,3 +83,46 @@ ggplot(muestra_aux, aes(y=table, x=factor(clus))) +
   labs(x = "clus", y = "table")+
   theme(text = element_text(size=14))+
   theme_grey(base_size = 16)
+
+ggplot(muestra_aux, aes(y=carat, x=factor(clus))) + 
+  geom_boxplot(fill="lightgreen",varwidth = T)+
+  labs(x = "clus", y = "carat")+
+  theme(text = element_text(size=14))+
+  theme_grey(base_size = 16)
+
+ggplot(muestra_aux, aes(y=color, x=factor(clus))) + 
+  geom_boxplot(fill="lightgreen",varwidth = T)+
+  labs(x = "clus", y = "color")+
+  theme(text = element_text(size=14))+
+  theme_grey(base_size = 16)
+
+ggplot(muestra_aux, aes(y=x, x=factor(clus))) + 
+  geom_boxplot(fill="lightgreen",varwidth = T)+
+  labs(x = "clus", y = "x")+
+  theme(text = element_text(size=14))+
+  theme_grey(base_size = 16)
+
+ggplot(muestra_aux, aes(y=y, x=factor(clus))) + 
+  geom_boxplot(fill="lightgreen",varwidth = T)+
+  labs(x = "clus", y = "y")+
+  theme(text = element_text(size=14))+
+  theme_grey(base_size = 16)
+
+ggplot(muestra_aux, aes(y=z, x=factor(clus))) + 
+  geom_boxplot(fill="lightgreen",varwidth = T)+
+  labs(x = "clus", y = "z")+
+  theme(text = element_text(size=14))+
+  theme_grey(base_size = 16)
+
+ggplot(muestra_aux, aes(y=clarity, x=factor(clus))) + 
+  geom_boxplot(fill="lightgreen",varwidth = T)+
+  labs(x = "clus", y = "clarity")+
+  theme(text = element_text(size=14))+
+  theme_grey(base_size = 16)
+
+ggplot(muestra_aux, aes(y=cut, x=factor(clus))) + 
+  geom_boxplot(fill="lightgreen",varwidth = T)+
+  labs(x = "clus", y = "cut")+
+  theme(text = element_text(size=14))+
+  theme_grey(base_size = 16)
+
